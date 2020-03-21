@@ -3,6 +3,9 @@ uuid = "6053dad5-5ea9-4561-ad32-9b14f501a2c6"
 authors = ["Anand Jain"]
 version = "0.1.0"
 
+[deps]
+LinearAlgebra = "37e2e46d-f89d-539d-b4ee-838fcccc9c8e"
+
 [compat]
 julia = "1.3"
 
