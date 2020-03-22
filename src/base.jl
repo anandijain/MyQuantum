@@ -63,7 +63,7 @@ X = Complex[0 1; 1 0]
 Z = Complex[1 0; 0 -1]
 Y = Complex[0 -1im; 1im 0]
 H = Complex[1 1; 1 -1] ./ sqrt(2)
-Rn(θ, n̂) = cos(θ/2) .* I - 1im*sin(θ/2)
+Rn(θ, n̂) = cos(θ/2) .* Id - 1im*sin(θ/2) * ()
 
 # common states
 ket_0 = Complex[1; 0]
@@ -88,6 +88,11 @@ function test_Cgates()
 end
 
 function bell_states()
+    # # bell states
+    # 00: 00 + 11
+    # 10: 00 - 11
+    # 01: 01 + 10
+    # 11: 01 - 10
     β_00 = Cgate(X) * kron(H * ket_0, ket_0)
     β_01 = Cgate(X) * kron(H * ket_0, ket_1)
     β_10 = Cgate(X) * kron(H * ket_1, ket_0)
@@ -95,8 +100,9 @@ function bell_states()
     β_00, β_01, β_10, β_11
 end
 
-# bell states
-00: 00 + 11
-10: 00 - 11
-01: 01 + 10
-11: 01 - 10
+# function eulerform(U)
+    # thm 
+    # U single qubit unitary ⟹ ∃ α, β, γ, δ ∈ ℝ, st 
+    # U = exp(iα) * [exp(-i\)]
+    
+# end

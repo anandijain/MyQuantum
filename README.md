@@ -9,31 +9,31 @@
 [![Build Status](https://api.cirrus-ci.com/github/anandijain/MyQuantum.jl.svg)](https://cirrus-ci.com/github/anandijain/MyQuantum.jl)
 
 
-## includes:
+## includes
 
 * Basics of Quantum Linear Algebra (theorems, gates, no proofs)
 * Ability to play around w 1-2 qubits for learning
 
 
-## todo:
+## todo
 
 * use Base/LinearAlg for norming
 * deutsch/deutsch-jozsa, quantum tele, superdense coding, and maybe qft
 * write pauli(n) a function using kronecker δ.
-* cauchy ineq
-* unitary as euler rotation
+* rotation about arbitrary axis
 * is pure/ mixed state function
 * show/test bell states are maximally entangled
 * basic circuit interface with measure, single qubit gate to prod state
 * show unitary + CX is universal gate set 
-* matrix attribute tagging with types? for unitary, hermitian, normed
+* matrix attribute tagging with types? for unitary, hermitian, normed, op
 
-## todo (hard):
+## todo (hard)
 
 * surface coding
 
-## completed:
+## completed
 
+* unitary as euler rotation (no proof)
 * gen bell states
 * prevented off-by-eps errors using the ≈ operator
 * arbitrary 2 qubit controlled gate
