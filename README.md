@@ -8,15 +8,22 @@
 [![Coveralls](https://coveralls.io/repos/github/anandijain/MyQuantum/badge.svg?branch=master)](https://coveralls.io/github/anandijain/MyQuantum?branch=master)
 [![Build Status](https://api.cirrus-ci.com/github/anandijain/MyQuantum.svg)](https://cirrus-ci.com/github/anandijain/MyQuantum)
 
+If you are new to quantum computing/never taken linear algebra, make sure you understand the different definitions.
+
+## Basic reference
+
+* QC is reversible, so all operators must be invertible, specifically unitary.
+* The two key concepts of QIS are superposition and entanglement.
 
 ## includes
 
 * Basics of Quantum Linear Algebra (theorems, gates, no proofs)
 * Ability to play around w 1-2 qubits for learning
 
-
 ## todo
 
+* fix building docs to gh-pages **(you can build docs on your own though)**
+* Toffoli or n-qubit controlled unitary gate.
 * use Base/LinearAlg for norming
 * deutsch/deutsch-jozsa, quantum tele, superdense coding, and maybe qft
 * write pauli(n) a function using kronecker δ.
@@ -25,11 +32,16 @@
 * show/test bell states are maximally entangled
 * basic circuit interface with measure, single qubit gate to prod state
 * show unitary + CX is universal gate set 
-* matrix attribute tagging with types? for unitary, hermitian, normed, op
+* add type system and standardize argument notation (op, state, prod state, etc) 
 
 ## todo (hard)
 
 * surface coding
+* autodiff with Flux/zygote
+
+## rand
+
+* instead of including proofs as functions, maybe create notebooks
 
 ## completed
 
@@ -37,3 +49,4 @@
 * gen bell states
 * prevented off-by-eps errors using the ≈ operator
 * arbitrary 2 qubit controlled gate
+

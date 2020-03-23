@@ -1,6 +1,28 @@
 using LinearAlgebra
 include("gates.jl")
 
+# common states
+ket_0 = Complex[1; 0]
+ket_1 = Complex[0; 1]
+ket_plus = Complex[1; 1] ./ sqrt(2)
+ket_minus = Complex[1; -1] ./ sqrt(2)
+
+# TODO
+# struct Op
+#     U::Matrix{Complex}
+#     isUnitary::Bool
+# end
+
+
+"""
+    conj_transpose(s)
+
+conj_transpose is a clearer name for adjoint for students.
+it is identical to `s'`
+"""
+function conj_transpose(s::Union{AbstractVecOrMat})
+    conj.(transpose(s))
+end
 
 """
     commutator(A, B)
@@ -53,16 +75,6 @@ function is_hermitian(s)
 end
 
 """
-    conj_transpose(s)
-
-conj_transpose is a clearer name for adjoint for students.
-it is identical to `s'`
-"""
-function conj_transpose(s)
-    conj.(transpose(s))
-end
-
-"""
     is_normed(s)
 
 if sum(s .^ 2)) ≈ 1., returns true
@@ -72,6 +84,16 @@ function is_normed(s)
     mag = convert.(Float64, sum(s .^ 2))
     @assert mag ≈ 1.
 end
+
+"""
+    is_linear(s)
+
+
+"""
+function is_linear()
+    
+end
+
 
 """
     inner(a, b)
@@ -99,32 +121,12 @@ function outer(a, b)
     a * conj_transpose(b)
 end
 
-# common states
-ket_0 = Complex[1; 0]
-ket_1 = Complex[0; 1]
-ket_plus = Complex[1; 1] ./ sqrt(2)
-ket_minus = Complex[1; -1] ./ sqrt(2)
-
 """
     Cgate(U)
 
 Cgate(U) creates a controlled U gate, given a unitary U.
 """
 Cgate(U) = kron(outer(ket_0, ket_0), Id) + kron(outer(ket_1, ket_1), U)
-
-"""
-    test_Cgates()
-
-verifies generated C-ops from Cgate() are correct using X, Y, Z, H.
-returns true if equal
-"""
-function test_Cgates()
-    CX = Complex[1 0 0 0; 0 1 0 0; 0 0 0 1; 0 0 1 0]
-    CY = Complex[1 0 0 0; 0 1 0 0; 0 0 0 -1im; 0 0 1im 0]
-    CZ = Complex[1 0 0 0; 0 1 0 0; 0 0 1 0; 0 0 0 -1]
-    CH = Complex[1 0 0 0; 0 1 0 0; 0 0 1/sqrt(2) 1/sqrt(2); 0 0 1/sqrt(2) -1/sqrt(2)]
-    Cgate.([X, Y, Z, H]) == [CX, CY, CZ, CH]
-end
 
 """
     bell_states()
@@ -145,6 +147,18 @@ function bell_states()
     β_00, β_01, β_10, β_11
 end
 
+
+"""
+    cauchy_schwarz(u, v)
+
+given arbitrary column vectors `|u⟩, |v⟩`, we want to show that,
+
+⟨u|u⟩⟨v|v⟩ ≥ |⟨u|v⟩|²
+"""
+
+function cauchy_schwarz(u, v)
+
+end
 # function eulerform(U)
     # thm 
     # U single qubit unitary ⟹ ∃ α, β, γ, δ ∈ ℝ, st 
