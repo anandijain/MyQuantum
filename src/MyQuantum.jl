@@ -6,6 +6,6 @@ include("base.jl")
 
 export is_unitary, is_hermitian, is_normed, conj_transpose, outer
 export Id, X, Y, Z, H, Rn, Cgate, test_Cgates, bell_states
-export ket_0, ket_1, ket_plus, ket_minus
+export ket_0, ket_1, ket_plus, ket_minus, commutator
 
 end # module

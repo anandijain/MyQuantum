@@ -6,12 +6,12 @@ makedocs(;
     pages=[
         "Home" => "index.md",
     ],
-    repo="https://github.com/anandijain/MyQuantum.jl/blob/{commit}{path}#L{line}",
-    sitename="MyQuantum.jl",
+    repo="https://github.com/anandijain/MyQuantum/blob/{commit}{path}#L{line}",
+    sitename="MyQuantum Documentation",
     authors="Anand Jain",
     assets=String[],
 )
 
 deploydocs(;
-    repo="github.com/anandijain/MyQuantum.jl",
+    repo="github.com/anandijain/MyQuantum",
 )

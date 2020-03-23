@@ -1,69 +1,103 @@
 using LinearAlgebra
+include("gates.jl")
 
 
+"""
+    commutator(A, B)
+
+commutator(A, B) := A * B - B * A
+Takes in two operators, if the result is zero, the operators commute.
+"""
 function commutator(A, B)
     A * B - B * A
 end
 
+"""
+    ops_commute(A, B)
+
+ops_commute(A, B) := commutator(A,B) ≈ fill(0., (dim, dim)) 
+for ops to commute they must be square and equal dim, so dim
+    is arbitrarily size(A, 1)
+"""
+function ops_commute(A, B)
+    if size(A) != size(B)
+        return false
+    end
+    dim = size(A, 1)
+    commutator(A,B) ≈ fill(0., (dim, dim)) 
+end
+    
+    """
+    is_unitary(s)
+
+A unitary matrix U is defined by U†U = UU† = I.
+returns true if `s` is unitary.
+Note `s` must be square.
+"""
 # TODO: fix 1/sqrt(2) and normalization 
 function is_unitary(s)
     LinearAlgebra.checksquare(s)
     s * conj_transpose(s) ≈ Id
-end
+end 
 
+"""
+    is_hermitian(s)
+
+A hermitian matrix U is defined by U = †U.
+returns true if s is hermitian.
+"""
 # throws error if not hermitian
 function is_hermitian(s)
     LinearAlgebra.checksquare(s);
     s ≈ conj_transpose(s)
 end
 
-function hermitian_test(s)
-    # just reaffirms 
-    @assert conj.(s') == conj.(s)'
-end
+"""
+    conj_transpose(s)
 
+conj_transpose is a clearer name for adjoint for students.
+it is identical to `s'`
+"""
 function conj_transpose(s)
     conj.(transpose(s))
 end
 
-function test_conj_trans(s)
-    conj_transpose(s) == s'
-end
+"""
+    is_normed(s)
 
+if sum(s .^ 2)) ≈ 1., returns true
+"""
 # throws error if s is not normalized
 function is_normed(s)
     mag = convert.(Float64, sum(s .^ 2))
     @assert mag ≈ 1.
 end
 
+"""
+    inner(a, b)
+
+given two equal dimension column vectors, a and b,
+returns the inner product <a|b> where <a| == conj_transpose(a)
+this is a duplicate function of dot(a, b) or (a ⋅ b).
+"""
 # use ⋅ ?
 function inner(a, b)
     conj_transpose(a) * b
 end
 
+"""
+    outer(a, b)
+
+given two equal dimension column vectors, |a> and |b>,
+returns the inner product |a><b| where <b| == conj_transpose(b)
+note, this function does NOT return the same as kron(a, b).
+outer returns a matrix, whereas kron returns a vector
+"""
 # todo splat n ops
 # add assert equal dims
 function outer(a, b)
     a * conj_transpose(b)
 end
-
-function test_outer(a, b)
-    # not true
-    outer(a, b) == kron(a, b)
-end
-
-function test_inner_outer(a, b)
-    # the trace of the outer product is equal to the inner product
-    tr(outer(a, b)) == dot(a, b)
-end
-
-# common single qubit gate defns
-Id = Complex[1. 0.; 0. 1.]
-X = Complex[0 1; 1 0]
-Z = Complex[1 0; 0 -1]
-Y = Complex[0 -1im; 1im 0]
-H = Complex[1 1; 1 -1] ./ sqrt(2)
-Rn(θ, n̂) = cos(θ/2) .* Id - 1im*sin(θ/2) * ()
 
 # common states
 ket_0 = Complex[1; 0]
@@ -71,22 +105,33 @@ ket_1 = Complex[0; 1]
 ket_plus = Complex[1; 1] ./ sqrt(2)
 ket_minus = Complex[1; -1] ./ sqrt(2)
 
-# arbitrary 2 qubit controlled gate 
+"""
+    Cgate(U)
+
+Cgate(U) creates a controlled U gate, given a unitary U.
+"""
 Cgate(U) = kron(outer(ket_0, ket_0), Id) + kron(outer(ket_1, ket_1), U)
 
+"""
+    test_Cgates()
+
+verifies generated C-ops from Cgate() are correct using X, Y, Z, H.
+returns true if equal
+"""
 function test_Cgates()
-    
     CX = Complex[1 0 0 0; 0 1 0 0; 0 0 0 1; 0 0 1 0]
     CY = Complex[1 0 0 0; 0 1 0 0; 0 0 0 -1im; 0 0 1im 0]
     CZ = Complex[1 0 0 0; 0 1 0 0; 0 0 1 0; 0 0 0 -1]
-
-    # fix norm before doing 
-    # CH = Complex[1 0 0 0; 0 1 0 0; 0 0 0 1; 0 0 1 0]
-    
-    Cgate.([X, Y, Z]) == [CX, CY, CZ]
-    # Cgate(H) == CH
+    CH = Complex[1 0 0 0; 0 1 0 0; 0 0 1/sqrt(2) 1/sqrt(2); 0 0 1/sqrt(2) -1/sqrt(2)]
+    Cgate.([X, Y, Z, H]) == [CX, CY, CZ, CH]
 end
 
+"""
+    bell_states()
+
+returns the four bell states as vectors in order of binary increasing
+qubit input states (00, 01, 10, 11)
+"""
 function bell_states()
     # # bell states
     # 00: 00 + 11
