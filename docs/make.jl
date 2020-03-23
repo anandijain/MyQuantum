@@ -9,9 +9,9 @@ makedocs(;
     repo="https://github.com/anandijain/MyQuantum/blob/{commit}{path}#L{line}",
     sitename="MyQuantum Documentation",
     authors="Anand Jain",
-    assets=String[],
 )
 
 deploydocs(;
-    repo="github.com/anandijain/MyQuantum.git"
+    repo="github.com/anandijain/MyQuantum.git",
+    branch="gh-pages"
 )
