@@ -13,5 +13,5 @@ makedocs(;
 )
 
 deploydocs(;
-    repo="github.com/anandijain/MyQuantum",
+    repo="github.com/anandijain/MyQuantum.git"
 )
